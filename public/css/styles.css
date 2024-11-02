@@ -1,0 +1,81 @@
+:root{
+    --main-color: #f4f4f5;
+    --second-color: #18181b;
+    --third-color: #ef4444;
+
+    --background-color: #f3f4f6;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, Geneva, Tahoma, sans-serif;
+}
+body{
+    margin: 0px;
+    background-color: var(--background-color);
+}
+
+/* Estilos generales */
+.marginb-3{
+    margin-bottom: 1rem;
+}
+
+.btn{
+    border-radius: 7px;
+    padding: 10 15;
+    border: none;
+    font-weight: bold;
+}
+.btn:hover{
+    cursor: pointer;
+}
+.btn-blank{
+    background-color: #fff;
+    color: var(--second-color);
+    border: 1px solid #e4e4e7;
+}
+.btn-blank:hover{
+    background-color: #dfdfdf;
+}
+.btn-black{
+    background-color: var(--second-color);
+    color: var(--main-color);
+}
+.btn-red{
+    background-color: var(--third-color);
+    color: #fff;
+}
+.btn-black:hover, .btn-red:hover {
+    background-image: linear-gradient(0deg, rgba(222, 222, 222, 0.3), rgba(222, 222, 222, 0.3));
+}
+
+table{
+    table-layout: auto;
+    border-collapse: collapse;
+}
+table th, table td{
+    text-align: left;
+}
+tbody tr{
+    border-top: 2px solid #e4e4e7 !important;
+}
+thead th{
+    padding: 10;
+}
+tbody td{
+    padding: 15px 10px;
+}
+table tr:hover {
+    background-color: var(--background-color);
+}
+
+/* Estilos para Formuarios */
+.control-form{
+    width: 100%;
+    padding: 7 5;
+    border: 2px solid #e4e4e7;
+    border-radius: 5px;
+}
+
+/* 
+** Footer **
+*/
+.container-foot{
+    text-align: center;
+}
