@@ -10,4 +10,11 @@ class Personal extends Model{
             return "No se pudo obtener el personal";
         }
     }
+
+    public function insertPersonal($dataArray) {
+        $sql = "INSERT INTO personal (nombres, dni, telefono, email, cargo, departamento, fk_area) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->db->prepare($sql);
+        return $dataArray;
+        //if( $stmt->execute() )
+    }
 }

@@ -14,11 +14,12 @@ body{
 /* Estilos generales */
 .marginb-3{
     margin-bottom: 1rem;
+    width: 100%;
 }
 
 .btn{
     border-radius: 7px;
-    padding: 10 15;
+    padding: 10px 15px;
     border: none;
     font-weight: bold;
 }
@@ -68,9 +69,10 @@ table tr:hover {
 /* Estilos para Formuarios */
 .control-form{
     width: 100%;
-    padding: 7 5;
+    padding: 7px 5px;
     border: 2px solid #e4e4e7;
     border-radius: 5px;
+    display: block;
 }
 
 /* 

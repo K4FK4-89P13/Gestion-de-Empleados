@@ -2,7 +2,7 @@
 
 class Core {
 
-    protected $controller = 'HomeController';
+    protected $controller = 'LoginController';
     protected $method = 'index';
     protected $params = [];
 
