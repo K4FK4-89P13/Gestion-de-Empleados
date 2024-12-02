@@ -44,10 +44,12 @@
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         })
-            .then(res => res.text())
+            .then(res => res.json())
             .then(res => {
-                console.log(res);
-                window.location.replace(`<?=BASE_URL?>`);
+                console.log('Respuesta: ',res);
+                alert( res.message ? res.message : res.error );
+                if( res.message ) window.location.replace(`<?=BASE_URL?>`);
+                alert(res.error);
             })
             .catch(err => console.error(err))
     });

@@ -8,14 +8,19 @@ class LoginController extends Controller {
         }
     }
     public function authUsuario() {
-        $data = json_decode( file_get_contents('php://input'), true );
-        if( $data ){
+        try{
+            $data = json_decode( file_get_contents('php://input'), true );
             $adminModel = $this->load_model('Admin');
             $resultado = $adminModel->validacion($data);
-            if($resultado) $_SESSION['usuario'] = $resultado['nombres'];
+            //echo $resultado;
+            if( !isset($resultado['getAdmin']) ) {
+                throw new Exception($resultado['error']);
+                
+            }
+            $_SESSION['usuario'] = $resultado['getAdmin']['nombres'];
             echo json_encode(['message' => $resultado]);
-        }else{
-            echo json_encode(['message' => 'Datos incompletos']);
+        }catch(Exception $e) {
+            echo json_encode(['error' => $e->getMessage()]);
         }
     }
 
