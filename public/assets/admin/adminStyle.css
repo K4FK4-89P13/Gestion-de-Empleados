@@ -39,6 +39,7 @@
 }
 .tab-page{
     display: none;
+    width: 100%;
 }
 .tab-page:first-child{
     display: block;

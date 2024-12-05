@@ -1,14 +1,32 @@
 <?php
 class Admin extends Model {
 
+    public function insertAdmin($datos) {
+        $sql  = "INSERT INTO admin (nombres, dni, contrasenia) VALUES (?, ?, 'password')";
+        $stmt = $this->db->prepare($sql);
+        try {
+            if (!$stmt->execute($datos)) {
+                throw new Exception('Error en la consulta');
+            }
+            return ['message' => 'Registrado correctamente'];
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
     public function getAllAdmin() {
         $sql = "SELECT id_admin, nombres, dni FROM admin WHERE estado = 1";
         $stmt = $this->db->prepare($sql);
         try {
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Error $e) {
-            return json_encode(['error' => "".$e->getMessage()]);
+            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if( !$resultados ){
+                throw new Exception('Error en la consulta Admin');
+            }
+            return ['datos' => $resultados];
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
         }
     }
     
@@ -28,7 +46,14 @@ class Admin extends Model {
             return ['getAdmin' => $admin];
 
         }catch(Exception $e) {
-            return ['error' => "".$e->getMessage()];
+            return ['error' => $e->getMessage()];
         }
+    }
+
+    function disableAdmin($id) {
+        $sql = "UPDATE admin SET estado = 0 WHERE id_admin = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$id]);
+        return 'Codigo de Base de datos';
     }
 }

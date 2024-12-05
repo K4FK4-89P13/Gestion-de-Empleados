@@ -1,88 +1,4 @@
-<style type="text/css">
-    .header{
-        background-color: var(--second-color);
-        color: var(--main-color);
-
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 15;
-    }
-    .container{
-        width: 75%;
-        margin: 40 auto;
-    }
-    .contenedor-tab{
-        width: 100%;
-        padding: 10 15;
-        background-color: #fff;
-        border: 2px solid #e4e4e7;
-        border-radius: 10px;
-        margin: 10 0;
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-    }
-    .page-table{
-        width: 100%;
-        background-color: #fff;
-        padding: 10 15;
-        border: 2px solid #e4e4e7;
-        border-radius: 10px;
-        
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-    .page-table h3, .page-table p{
-        margin: 7 5;
-    }
-    .tab-page{
-        display: none;
-    }
-    .tab-page:first-child{
-        display: block;
-    }
-
-
-
-    /* 
-    * Estilo para el fondo del modal *
-    */
-    .modal {
-        display: none; /* Oculto por defecto */
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro transparente */
-    }
-
-    /* Contenido del modal */
-    .modal-content {
-        position: relative;
-        background-color: #fff;
-        margin: 2% auto; /* Centrado vertical */
-        padding: 20px;
-        border-radius: 8px;
-        width: 400px;
-        max-width: 90%;
-    }
-
-    /* Botón de cerrar modal */
-    .close {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 24px;
-        font-weight: bold;
-        color: #333;
-        cursor: pointer;
-    }
-</style>
+<link rel="stylesheet" href="./assets/admin/adminStyle.css">
 
 <?php include_once APP_PATH . '/app/views/inc/header.php'?>
 
@@ -95,7 +11,7 @@
     </div>
 
     <div class="container">
-         <!-- Menu para navegar por l as tablas -->
+         <!-- Menu para navegar por las tablas -->
         <div class="contenedor-tab">
             <div class="admin-div">
                 <div class="tab-header btn btn-black">
@@ -154,6 +70,7 @@
             <!-- Pagina de Empleados -->
             <div class="tab-page">
                 <div class="page-table" id="contenido-personal">
+                    <?php include_once APP_PATH . '/app/views/buscadorAvanzado/buscador.php' ?>
                     <div class="titulo">
                         <h3>Gestión de Empleados</h3>
                         <p>Administra los empleados</p>
@@ -164,13 +81,16 @@
                     <table class="table" id="table-personal">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Nombres</th>
                                 <th>DNI</th>
                                 <th>Telefono</th>
                                 <th>Email</th>
-                                <th>Area</th>
                                 <th>Cargo</th>
                                 <th>Departamento</th>
+                                <th>Fecha de Ingreso</th>
+                                <th>Sueldo</th>
+                                <th>Area</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -206,6 +126,7 @@
                     <table class="table" id="table-areas">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Nombre</th>
                                 <th>Descripción</th>
                                 <th>Acciones</th>
@@ -317,7 +238,8 @@
     <?php include_once APP_PATH . '/app/views/inc/footer.php'?>
 
     <!-- javaScript de la Vista -->
-    <?php include_once APP_PATH . '/app/views/admin/script.php'?>
+    <script src="./assets/admin/script.js"></script>
+    
     
 </body>
 </html>

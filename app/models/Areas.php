@@ -2,12 +2,19 @@
 
 class Areas extends Model{
     public function getAllAreas() {
-        $sql = "SELECT * FROM areas";
+        $sql = "SELECT id_area, nombre, descripcion FROM areas";
         $stmt = $this->db->prepare($sql);
-        if($stmt->execute()) {
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }else{
-            return "No se pudo obtener las Areas";
+
+        try {
+            $stmt->execute();
+            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if( !($resultados) ){
+                throw new Exception('Error en la consulta');
+            }
+            return ['datos' => $resultados];
+        } catch (Exception $e) {
+            return ['error' => $e->getMEssage()];
         }
     }
 }

@@ -47,9 +47,8 @@
             .then(res => res.json())
             .then(res => {
                 console.log('Respuesta: ',res);
-                alert( res.message ? res.message : res.error );
-                if( res.message ) window.location.replace(`<?=BASE_URL?>`);
-                alert(res.error);
+                //alert( res.message ? res.message : res.error );
+                !res.message ? alert(res.error) : window.location.replace(`<?=BASE_URL?>`);
             })
             .catch(err => console.error(err))
     });
