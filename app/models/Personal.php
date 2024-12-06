@@ -27,6 +27,19 @@ class Personal extends Model{
         //if( $stmt->execute() )
     }
 
+    public function disablePersonal($id) {
+        $sql = "UPDATE personal SET habilitado = 0 WHERE id_personal = ?";
+        $stmt = $this->db->prepare($sql);
+        try {
+            if(!$stmt->execute([$id])) {
+                throw new Exception('Error al eliminar el personal');
+            }
+            return ['message' => 'Personal eliminado correctamente'];
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
     public function buscarPersonal($filtros) {
         $sql = "SELECT id_personal, nombres, dni, telefono, email, cargo, departamento, fecha_ingreso, sueldo, areas.nombre AS area
                 FROM personal

@@ -53,7 +53,13 @@ class Admin extends Model {
     function disableAdmin($id) {
         $sql = "UPDATE admin SET estado = 0 WHERE id_admin = ?";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
-        return 'Codigo de Base de datos';
+        try {
+            if(!$stmt->execute([$id])){
+                throw new Exception('Error al eliminar Admin');
+            };
+            return ['message' => 'Administrador eliminado correctamente'];
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 }

@@ -65,12 +65,85 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => console.error(err));
     }
 
+    /* Funcion general para abrir el modal en modo Editar */
+    function openModalEditar(dataObject) {
+        document.querySelector(dataObject['id_tabla']).addEventListener('click', e => {
+            if(e.target.classList.contains('editar')) {
+                const fila = e.target.closest('tr');
+                dataObject['form'].querySelector('h3').textContent = dataObject['titulo'];
+                dataObject['form'].querySelector('p').textContent = dataObject['descripcion'];
+        
+                const entradas = document.querySelectorAll(`${dataObject['form_id']} .control-form`);
+                let i = 2;
+                entradas.forEach( item => {
+                    item.value = fila.querySelector(`td:nth-child(${i})`).textContent;
+                    i++;
+                } );
+        
+                dataObject['modal'].style.display = "block";
+            }
+        })
+    }
+
+    function actualizarResgistro(form, modal, url_rewrite, url_get, id_tabla) {
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target));
+            console.log(data);
+            fetch(`${BASE_URL}${url_rewrite}`, {
+                method: 'POST',
+                headers: {'Conten-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if(data.datos){
+                    alert(data.datos);
+                    actualizarTabla(url_get, id_tabla);
+                }else{
+                    alert(data.error);
+                }
+            })
+            modal.style.display = "none";
+        })
+    }
+
+    /* Funcion para eliminar cualquier registro */
+    function eliminarRegistro(url_delete, idTabla, url_get) {
+        document.querySelector('#'+idTabla).addEventListener('click', e => {
+            if( e.target.classList.contains('borrar') ) {
+                if( confirm('¿Seguro que quieres eliminar este registro?') ){
+                    const id_fila = e.target.closest('tr').querySelector('td').textContent;
+                    console.log(id_fila);
+                    fetch(`${BASE_URL}${url_delete}`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({'id_fila': id_fila})
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if(data.message) {
+                            alert(data.message);
+                            actualizarTabla(url_get, idTabla);
+                        }else{
+                            alert(data.error);
+                        }
+                    })
+                    .catch(err => console.error(err));
+                }
+            }
+        })
+    }
+
 
     /*--Obtener todos los Administradores --------------------------------------------------------------------*/
         actualizarTabla('/Home/showAdmin', 'table-admin');
+        actualizarResgistro(formAdmin, modalAdmin);
 
         //Insertar nuevos Administradores
-        formAdmin.addEventListener('submit', e => {
+        /* formAdmin.addEventListener('submit', e => {
             e.preventDefault();
 
             const data = Object.fromEntries( new FormData(e.target) );
@@ -87,107 +160,76 @@ document.addEventListener('DOMContentLoaded', () => {
                 modalAdmin.style.display = "none";
             })
             .catch(err => console.error(err))
+        }); */
+
+        // Abrir el modal de Admnistradores en modo Editar //
+        openModalEditar({
+            form: formAdmin,
+            form_id: '#form-admin',
+            id_tabla: '#table-admin',
+            titulo: 'Editar Administrador',
+            descripcion: 'Modifica los datos del administrador',
+            modal: modalAdmin
         });
 
-        /* Funcion para abrir el modal de Admnistradores en modo Editar */
-        function editarAdmin(fila) {
-            formAdmin.querySelector('h3').textContent = "Editar Administrador";
-            formAdmin.querySelector('p').textContent = "Modifica los datos del administrador";
-
-            document.querySelector('#nombre-admin').value = fila.querySelector('td:nth-child(2)').textContent;
-            document.querySelector('#dni-admin').value = fila.querySelector('td:nth-child(3)').textContent;
-
-            modalAdmin.style.display = "block";
-        }
-        
-        document.querySelector('#table-admin').addEventListener('click', e => {
-            if(e.target.classList.contains('editar')) {
-                const fila = e.target.closest('tr');
-                editarAdmin(fila);
-            }
-            if(e.target.classList.contains('borrar')) {
-                if( confirm('¿Seguro que quieres eliminar a este administrador?') ) {
-                    const id_admin = e.target.closest('tr').querySelector('td').textContent;
-                    console.log(id_admin);
-                    fetch(`${BASE_URL}/Personal/disable`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({'id_admin': id_admin})
-                    })
-                    .then(res => res.text())
-                    .then(data => {
-                        console.log(data);
-                        getAllAdmin();
-                    })
-                    .catch(err => console.error(err))
-                };
-            }
-        })
+        // Eliminar Administrador //
+        eliminarRegistro('/Personal/disable', 'table-admin', '/Home/showAdmin');
     /* ------------------------------------------------------------------------------------------ */
         
 
-    /*--Peticioin AJAX para obtener todos los Empleados ------------------------------------------*/
+    /*--Obtener todos los Empleados --------------------------------------------------------------*/
         actualizarTabla('/Home/showPersonal', 'table-personal');
         
-        /* Funcion para abrir el modal de Empleados en modo editar */
-            function abrirModalEditar(fila) {
-                formEmpleado.querySelector('h3').textContent = "Editar Empleado";
-                formEmpleado.querySelector('p').textContent = "Modifica los datos del empleado";
+        // Abrir modal empleado en modo Editar //
+        openModalEditar({
+            'form': formEmpleado,
+            form_id: '#form-empleado',
+            id_tabla: '#table-personal',
+            'titulo': 'Editar Empleado',
+            'descripcion': 'Modifica los datos del empleado',
+            'modal': modalEmpleado
+        });
 
-                document.querySelector('#form-empleado #nombre').value = fila.querySelector('td:nth-child(1)').textContent;
-                document.querySelector('#form-empleado #dni').value = fila.querySelector('td:nth-child(2)').textContent;
-                document.querySelector('#form-empleado #telefono').value = fila.querySelector('td:nth-child(3)').textContent;
-                document.querySelector('#form-empleado #email').value = fila.querySelector('td:nth-child(4)').textContent;
-                document.querySelector('#form-empleado #area').value = fila.querySelector('td:nth-child(5)').textContent;
-                document.querySelector('#form-empleado #cargo').value = fila.querySelector('td:nth-child(6)').textContent;
-                document.querySelector('#form-empleado #departamento').value = fila.querySelector('td:nth-child(7)').textContent;
-
-                modalEmpleado.style.display = "block";
-            }
-
-            document.querySelector('#table-personal').addEventListener('click', e => {
-                if(e.target.classList.contains('editar')) {
-                    const fila = e.target.closest('tr');
-                    abrirModalEditar(fila);
-                }
-                if(e.target.classList.contains('borrar')) {
-                    confirm("¿Seguro que quieres eliminar este registro?");
-                }
-            });
+        // Eliminar Empleado //
+        eliminarRegistro('/Personal/disablePersonal', 'table-personal', '/Home/showPersonal');
     /* ----------------------------------------------------------------------------------------- */
 
         
     /*--Obtener todas las Areas------------------------------------------------------------------*/
         actualizarTabla('/Home/showAreas', 'table-areas');
         
-        /* Modal para Areas */
-        /* Funcion para abrir modal de Areas en modo editor */
-        function editarArea(fila) {
-            formAreas.querySelector('h3').textContent = "Editar Area";
-            formAreas.querySelector('p').textContent = "Modifica los datos del Area";
+        /* Abrir modal de Areas en modo editor */
+        openModalEditar({
+            form: formAreas,
+            form_id: '#form-areas',
+            id_tabla: '#table-areas',
+            titulo: 'Editar Area',
+            descripcion: 'Modifica los datos del area',
+            modal: modalArea
+        });
 
-            document.querySelector('#nombre-area').value = fila.querySelector('td:nth-child(1)').textContent;
-            document.querySelector('#descripcion').value = fila.querySelector('td:nth-child(2)').textContent;
+        // Eliminar Area //
+        eliminarRegistro('/Personal/disableArea', 'table-areas', '/Home/showAreas');
+    /* ----------------------------------------------------------------------------------------- */
 
-            modalArea.style.display = "block";
-        }
 
-        document.querySelector('#table-areas').addEventListener('click', e => {
-            if(e.target.classList.contains('editar')) {
-                editarArea( e.target.closest('tr') );
+    /*--Obtener todas las Asistencias ---------------------------------------------------------- */
+        actualizarTabla('/Personal/getAllAsistencias', 'table-asistencias');
+
+        // Obtener datos para el select de Personal //
+        fetch(`${BASE_URL}/Home/showPersonal`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.datos) {
+                const select = document.querySelector('#form-asistencia #personal');
+                select.innerHTML = `<option value=''>Selecciona un personal</option>`;
+                data.datos.forEach(item => {
+                    select.innerHTML += `<option value=${item.id_personal}>${item.nombres}</option>`;
+                });
             }
-            if(e.target.classList.contains('borrar')){
-                confirm('¿Seguro que desea eliminar este registro?');
-            }
-        })
+        }).catch(err => console.error(err));
     /* ----------------------------------------------------------------------------------------- */
     
-
-    
-        
-    
-
-
 
 
     /* Tab Menu */

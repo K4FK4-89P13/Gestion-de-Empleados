@@ -28,6 +28,11 @@
                     <span>Areas</span>
                 </div>
             </div>
+            <div class="asistencias-div">
+                <div class="tab-header btn btn-blank">
+                    <span>Asistencias</span>
+                </div>
+            </div>
         </div>
 
         <div id="contenido" class="tab-content">
@@ -64,6 +69,26 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <!-- Modal para agregar Administradores -->
+            <div class="modal" id="modal-admin">
+                <div class="modal-content">
+                    <span class="close" id="close-modal">&times;</span>
+                    <!-- Aquí van los campos del formulario para agregar un administrador -->
+                    <form id="form-admin" class="form-modal">
+                        <h3>Agregar Nuevo Administrador</h3>
+                        <p>Ingresa los datos del nuevo administrador</p>
+                        <div class="marginb-3">
+                            <label for="nombre-admin" class="label-form">Nombres:</label>
+                            <input type="text" id="nombre-admin" name="nombre-admin" class="control-form">
+                        </div>
+                        <div class="marginb-3">
+                            <label for="dni-admin">DNI:</label>
+                            <input type="text" name="dni-admin" id="dni-admin" class="control-form">
+                        </div>
+                        <button type="submit" class="btn btn-black">Guardar</button>
+                    </form>
                 </div>
             </div>
 
@@ -112,6 +137,47 @@
                     </table>
                 </div>
             </div>
+            <!-- Modal para agregar Personal -->
+            <div class="modal" id="modal-empleado">
+                <div class="modal-content">
+                    <span class="close" id="close-modal">&times;</span>
+                    <!-- Aquí van los campos del formulario para agregar un empleado -->
+                    <form id="form-empleado" class="form-modal">
+                        <h3>Agregar Nuevo Empleado</h3>
+                        <p>Ingresa los datos del nuevo empleado.</p>
+                        <div class="marginb-3">
+                            <label for="nombre" class="label-form">Nombre:</label>
+                            <input type="text" id="nombre" name="nombre" class="control-form">
+                        </div>
+                        <div class="marginb-3">
+                            <label for="dni">DNI:</label>
+                            <input type="text" id="dni" name="dni" class="control-form">
+                        </div>
+                        <div class="marginb-3">
+                            <label for="telefono">Telefono</label>
+                            <input type="text" name="telefono" id="telefono" class="control-form">
+                        </div>
+                        <div class="marginb-3">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" class="control-form">
+                        </div>
+                        <div class="marginb-3">
+                            <label for="area">Area</label>
+                            <input type="text" name="area" id="area" class="control-form">
+                        </div>
+                        <div class="marginb-3">
+                            <label for="cargo">Cargo</label>
+                            <select name="cargo" id="cargo" class="control-form">
+                            </select>
+                        </div>
+                        <div class="marginb-3">
+                            <label for="departamento">Departamento</label>
+                            <input type="text" name="departamento" id="departamento" class="control-form">
+                        </div>
+                        <button type="submit" class="btn btn-black">Guardar</button>
+                    </form>
+                </div>
+            </div>
 
             <!-- Pagina de Areas -->
             <div class="tab-page">
@@ -145,94 +211,33 @@
                     </table>
                 </div>
             </div>
+            <!-- Modal formulario para Areas -->
+            <div class="modal" id="modal-areas">
+                <div class="modal-content">
+                    <span class="close" id="close-modal">&times;</span>
+                    <!-- Aquí van los campos del formulario para agregar un empleado -->
+                    <form id="form-areas" class="form-modal">
+                        <h3>Agregar Nueva Area</h3>
+                        <p>Ingresa los datos de la nueva area.</p>
+                        <div class="marginb-3">
+                            <label for="nombre-area" class="label-form">Nombre:</label>
+                            <input type="text" id="nombre-area" name="nombre-area" class="control-form">
+                        </div>
+                        <div class="marginb-3">
+                            <label for="descripcion">Descripción:</label>
+                            <textarea name="descripcion" id="descripcion" class="control-form"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-black">Guardar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Pagina de asistencias -->
+             <?php include_once APP_PATH . '/app/views/admin/tablaAsistencias/asistencias.php'?>
 
         </div>
     </div>
-
-    <!-- Modal para agregar Administradores -->
-    <div class="modal" id="modal-admin">
-        <div class="modal-content">
-            <span class="close" id="close-modal">&times;</span>
-            <!-- Aquí van los campos del formulario para agregar un administrador -->
-            <form id="form-admin" class="form-modal">
-                <h3>Agregar Nuevo Administrador</h3>
-                <p>Ingresa los datos del nuevo administrador</p>
-                <div class="marginb-3">
-                    <label for="nombre-admin" class="label-form">Nombres:</label>
-                    <input type="text" id="nombre-admin" name="nombre-admin" class="control-form">
-                </div>
-                <div class="marginb-3">
-                    <label for="dni-admin">DNI:</label>
-                    <input type="text" name="dni-admin" id="dni-admin" class="control-form">
-                </div>
-                <button type="submit" class="btn btn-black">Guardar</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal para agregar Personal -->
-    <div class="modal" id="modal-empleado">
-        <div class="modal-content">
-            <span class="close" id="close-modal">&times;</span>
-            <!-- Aquí van los campos del formulario para agregar un empleado -->
-            <form id="form-empleado" class="form-modal">
-                <h3>Agregar Nuevo Empleado</h3>
-                <p>Ingresa los datos del nuevo empleado.</p>
-                <div class="marginb-3">
-                    <label for="nombre" class="label-form">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" class="control-form">
-                </div>
-                <div class="marginb-3">
-                    <label for="dni">DNI:</label>
-                    <input type="text" id="dni" name="dni" class="control-form">
-                </div>
-                <div class="marginb-3">
-                    <label for="telefono">Telefono</label>
-                    <input type="text" name="telefono" id="telefono" class="control-form">
-                </div>
-                <div class="marginb-3">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" class="control-form">
-                </div>
-                <div class="marginb-3">
-                    <label for="area">Area</label>
-                    <input type="text" name="area" id="area" class="control-form">
-                </div>
-                <div class="marginb-3">
-                    <label for="cargo">Cargo</label>
-                    <select name="cargo" id="cargo" class="control-form">
-                    </select>
-                </div>
-                <div class="marginb-3">
-                    <label for="departamento">Departamento</label>
-                    <input type="text" name="departamento" id="departamento" class="control-form">
-                </div>
-                <button type="submit" class="btn btn-black">Guardar</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal formulario para Areas -->
-    <div class="modal" id="modal-areas">
-        <div class="modal-content">
-            <span class="close" id="close-modal">&times;</span>
-            <!-- Aquí van los campos del formulario para agregar un empleado -->
-            <form id="form-areas" class="form-modal">
-                <h3>Agregar Nueva Area</h3>
-                <p>Ingresa los datos de la nueva area.</p>
-                <div class="marginb-3">
-                    <label for="nombre-area" class="label-form">Nombre:</label>
-                    <input type="text" id="nombre-area" name="nombre-area" class="control-form">
-                </div>
-                <div class="marginb-3">
-                    <label for="descripcion">Descripción:</label>
-                    <!-- <input type="text" id="descripcion" name="descripcion" class="control-form"> -->
-                    <textarea name="descripcion" id="descripcion" class="control-form"></textarea>
-                </div>
-                <button type="submit" class="btn btn-black">Guardar</button>
-            </form>
-        </div>
-    </div>
+    
 
     <!-- Footer -->
     <?php include_once APP_PATH . '/app/views/inc/footer.php'?>
