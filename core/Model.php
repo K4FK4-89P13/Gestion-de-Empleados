@@ -6,8 +6,8 @@ class Model {
 
     public function __construct() {
 
-        $dsn = "mysql:host=localhost;dbname=asistenciapersonal"; // Set DSN
-        $this->db = new PDO($dsn, 'root', 'admin');
+        $dsn = "mysql:host=" . HOST . ";dbname=" . DBNAME; // Set DSN
+        $this->db = new PDO($dsn, USERNAME, PASSWORD);
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 

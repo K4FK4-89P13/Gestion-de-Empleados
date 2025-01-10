@@ -14,7 +14,7 @@ class Admin extends Model {
         }
     }
 
-    public function getAllAdmin() {
+    public function allAdmin() {
         $sql = "SELECT id_admin, nombres, dni FROM admin WHERE estado = 1";
         $stmt = $this->db->prepare($sql);
         try {
@@ -43,7 +43,8 @@ class Admin extends Model {
             if( !$admin ){
                 throw new Exception("Datos incorrectos o incompletos");
             }
-            return ['getAdmin' => $admin];
+            $admin['rol'] = 'Administrador';
+            return ['admin' => $admin];
 
         }catch(Exception $e) {
             return ['error' => $e->getMessage()];

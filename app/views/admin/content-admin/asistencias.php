@@ -21,16 +21,6 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td>Adrian Polmar</td>
-                    <td>2024-10-25</td>
-                    <td>08:00:00</td>
-                    <td>16:00:00</td>
-                    <td>Ninguna</td>
-                    <td>
-                        <button class="btn btn-blank editar">Editar</button>
-                        <button class="btn btn-red">Eliminar</button>
-                    </td>
                 </tr>
             </tbody>
         </table>
@@ -43,11 +33,12 @@
         <span class="close" id="close-modal">&times;</span>
         <!-- Aquí van los campos del formulario para agregar una asistencia -->
         <form id="form-asistencia" class="form-modal">
-            <h3>Agregar Nueva Asistencia</h3>
-            <p>Ingresa los datos de la asistencia</p>
+            <h3 class="titulo">Agregar Nueva Asistencia</h3>
+
+            <input type="hidden" name="id-asistencia" id="id-asistencia" class="control-form">
             <div class="marginb-3">
                 <label for="personal" class="label-form">Personal</label>
-                <select name="personal" id="personal" class="control-form">
+                <select name="id-personal" id="id-personal" class="control-form">
                     <option value="">Selecciona un personal</option>
                 </select>
             </div>
@@ -71,5 +62,3 @@
         </form>
     </div>
 </div>
-
-<script src="./assets/tablaAsistencias/asistencias.js"></script>

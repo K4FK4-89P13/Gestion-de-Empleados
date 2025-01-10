@@ -1,7 +1,7 @@
 <?php
 
 class Areas extends Model{
-    public function getAllAreas() {
+    public function allAreas() {
         $sql = "SELECT id_area, nombre, descripcion FROM areas WHERE habilitado = 1";
         $stmt = $this->db->prepare($sql);
 

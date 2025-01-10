@@ -1,7 +1,7 @@
 <?php
 
 class Personal extends Model{
-    public function getAllPersonal() {
+    public function allPersonal() {
         $sql = "SELECT id_personal, nombres, dni, telefono, email, cargo, departamento, fecha_ingreso, sueldo, areas.nombre AS area
                 FROM personal
                 JOIN areas ON fk_area = areas.id_area
@@ -88,4 +88,26 @@ class Personal extends Model{
             return ['errorsql' => $e->getMessage()];
         }
     }
+
+    public function validacion($data) {
+        $sql = "SELECT id_personal, nombres, dni, telefono, email  FROM personal WHERE dni = ? AND contrasenia = ? AND habilitado = 1";
+        $stmt = $this->db->prepare($sql);
+        try {
+            $stmt->execute([
+                $data['dni'],
+                $data['contrasenia']
+            ]);
+            $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if( !$admin ){
+                throw new Exception("Personal no registrado");
+            }
+            $admin['rol'] = 'Personal';
+            return ['personal' => $admin];
+
+        }catch(Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
 }
